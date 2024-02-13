@@ -1,10 +1,13 @@
-from itertools import combinations
+import sys
+import itertools
 
+result = []
 while True:
-    s = list(map(int, input().split()))
-    if len(s) == 1 and s == [0]: #입력 0 받으면 그만
+    input_str = sys.stdin.readline()
+    array = list(map(int, input_str.split()))
+    if array[0] == 0:
         break
-    k = s.pop(0) #맨앞 숫자 제거
-    for data in list(combinations(s, 6)):
-        print(*data)
+    array2 = array.pop(0)
+    for comb in itertools.combinations(array, 6):
+        print(' '.join(map(str,comb)))
     print()
