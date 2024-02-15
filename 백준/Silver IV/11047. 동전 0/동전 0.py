@@ -7,10 +7,8 @@ for i in range(N):
 
 wallet.sort(reverse=True) #큰 수부터
 for i in range(len(wallet)):
-    count = 0
-    count = K//wallet[i]
-    answer += count
-    K -= wallet[i] * count  # 남은돈
+    answer+= K//wallet[i]
+    K %= wallet[i]
     if K == 0:
         break
 
