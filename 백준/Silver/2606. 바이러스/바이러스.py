@@ -26,10 +26,7 @@ def bfs():
                 visited[i] = 1
 
 bfs()
-count = 0
-for num in visited:
-    if num == 1:
-        count+=1
+
     
-print(count-1)
+print(sum(visited)-1)
 
