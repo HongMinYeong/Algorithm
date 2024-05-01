@@ -1,10 +1,11 @@
 class Solution {
     public String solution(String cipher, int code) {
-        StringBuilder answer = new StringBuilder();
-        char[] ciper = cipher.toCharArray();
-        for(int i=0;i<ciper.length/code;i++){
-            answer.append(ciper[(i+1)*(code)-1]);
+        String answer = "";
+
+        for (int i = code; i <= cipher.length(); i = i + code) {
+            answer += cipher.substring(i - 1, i);
         }
-        return answer.toString();
+
+        return answer;
     }
 }
