@@ -1,13 +1,13 @@
 class Solution {
     public double solution(int[] numbers) {
-        double answer = 0.0;
-        int i = 0;
-        double sum = 0;
-        while(i < numbers.length){
-            sum += numbers[i];
-            i++;
+        double answer = 0;
+
+        int sum = 0;
+        for(int i: numbers){
+            sum+=i;
         }
-        answer = sum/numbers.length;
+        answer = sum/(double)numbers.length;
         return answer;
     }
 }
+
