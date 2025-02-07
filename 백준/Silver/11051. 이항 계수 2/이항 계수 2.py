@@ -15,8 +15,8 @@ def solution(n,k):
 	
 	else:
 		cache[n][k] = solution(n-1,k-1) + solution(n-1,k) 
-	
+		cache[n][k] %= MOD
 	return cache[n][k]
 	
  
-print(solution(N,K)%10007)
+print(solution(N,K))
