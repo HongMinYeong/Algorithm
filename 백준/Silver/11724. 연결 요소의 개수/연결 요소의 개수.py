@@ -1,43 +1,34 @@
+# dfs 
 import sys
-from collections import deque
 
-N,M = map(int,sys.stdin.readline().split())
+sys.setrecursionlimit(10 ** 6)
 
-arr = [[] for _ in range(N+1)]
+N,M  = map(int,sys.stdin.readline().split())
+
+adj = [[0] * N for _ in range(N)] 
 
 for _ in range(M):
-    E,V = map(int,sys.stdin.readline().split())
-    arr[E].append(V)
-    arr[V].append(E)
+    a,b = map(lambda x: x-1,map(int,sys.stdin.readline().split()))
+    adj[a][b] = adj[b][a] = 1
+
+# for row in adj:
+#     print(row)
+
+ans = 0
+chk = [False] * N
 
 
-arr[0] = 0
+def dfs(now):
+    for nxt in range(N):
+        if adj[now][nxt] and not chk[nxt]:
+            chk[nxt] = True
+            dfs(nxt)
 
-q = deque()
-ans = [False for _ in range(N)]
-wer = 0
 
+for i in range(N):
+    if not chk[i]:
+        ans += 1
+        chk[i] = True
+        dfs(i)
 
-for i in range(1,N+1):
-    if arr[i] != 0 and len(arr[i]) > 0:
-        wer += 1
-        ans[i-1] = True
-        q.extend(arr[i])
-        while q:
-            nxt = q.popleft()
-            if ans[nxt-1]:
-                continue
-            if len(arr[nxt]) > 0 :
-                q.extend(arr[nxt])
-                arr[nxt] = 0
-            ans[nxt-1] = True
-                
-
-un_check = 0
-
-for check in ans:
-    if check != True:
-        un_check += 1
-
-print(wer + un_check)
-
+print(ans)
