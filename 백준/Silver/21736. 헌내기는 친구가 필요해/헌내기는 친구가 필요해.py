@@ -13,23 +13,22 @@ dy = [0,0,-1,1]
 
 def bfs(x,y):
     q = deque()
-    q.append((x,y,0))
+    q.append((x,y))
     uni[x][y] = 'X'
     answer = 0
     while q:
-        curr_x,curr_y,curr_p = q.popleft()
-        # print(curr_x,curr_y,curr_p)
+        curr_x,curr_y = q.popleft()
 
         for i in range(4):
             nx = curr_x + dx[i]
             ny = curr_y + dy[i]
             if 0 <= nx < N and 0 <= ny < M and uni[nx][ny]!='X':
                 if uni[nx][ny] == 'P':
-                    q.append((nx,ny,curr_p+1))
+                    q.append((nx,ny))
                     uni[nx][ny] = 'X'
                     answer += 1
                 else:
-                    q.append((nx,ny,curr_p))
+                    q.append((nx,ny))
                     uni[nx][ny] = 'X'
     return answer
 
