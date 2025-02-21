@@ -2,45 +2,40 @@ import sys
 from collections import deque
 
 input = sys.stdin.readline
-N,M = map(int,input().split())
+N, M = map(int, input().split())
 
-#무방향 bfs 
+# 무방향 그래프
 friend = [[] for _ in range(N+1)]
 
 for _ in range(M):
-    k,e = map(int,input().split())
+    k, e = map(int, input().split())
     friend[k].append(e)
     friend[e].append(k)
 
+def bfs(start):
+    bacon = [-1] * (N+1)  # 방문하지 않은 경우 -1
+    bacon[start] = 0
+    q = deque([start])
+    total_bacon = 0
 
-def bfs(s):
-    # print(s, "시작")
-    answer = 0
-    bacon = [0 for _ in range(N+1)]
-    bacon[s] = 1
-    q = deque()
-    q.append((friend[s],1))
     while q:
-        curr = q.popleft()
-        start = curr[0]
-        number = curr[1]
-        for k in start:
-            if bacon[k]==0:
-                # print("k는",k,"number는",number)
-                bacon[k] = number
-                answer+=number
-                q.append((friend[k],number+1))
-    
-    # print(s,"일때",answer,bacon)
-    return answer
-                
-ans = bfs(1)
-who = 1
+        node = q.popleft()
+        for next_node in friend[node]:
+            if bacon[next_node] == -1:  # 아직 방문하지 않은 경우
+                bacon[next_node] = bacon[node] + 1
+                total_bacon += bacon[next_node]
+                q.append(next_node)
 
-for i in range(1,N+1):
-    if ans > bfs(i):
+    return total_bacon
+
+# 최소 케빈 베이컨 수를 찾기 위한 초기값 설정
+min_bacon = float('inf')
+who = 0
+
+for i in range(1, N+1):
+    bacon_value = bfs(i)
+    if bacon_value < min_bacon:
+        min_bacon = bacon_value
         who = i
-        ans = bfs(i)
-    
+
 print(who)
-    
