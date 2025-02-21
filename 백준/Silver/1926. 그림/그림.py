@@ -6,41 +6,32 @@ N,M = map(int,input().split())
 pic = [list(map(int,input().split())) for _ in range(N)]
 chk = [[False for _ in range(M)] for _ in range(N)]
 
-dx = [-1,1,0,0]
-dy = [0,0,-1,1]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
-
-def is_valid_coord(x,y):
-    return 0<= x < N and 0<= y < M
-
-
-def bfs(s,e):
+def bfs(s, e):
     size = 1
-    q = deque()
-    q.append((s,e))
-    chk[s][e] = True
+    q = deque([(s, e)])
+    pic[s][e] = 0  # 방문 체크
+    
     while q:
-        x , y = q.popleft()
+        x, y = q.popleft()
         for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if is_valid_coord(nx,ny) and not chk[nx][ny] and pic[nx][ny] == 1:
-                chk[nx][ny] = True
-                q.append((nx,ny))
-                pic[nx][ny] = 0
+            nx, ny = x + dx[i], y + dy[i]
+            if 0 <= nx < N and 0 <= ny < M and pic[nx][ny] == 1:
+                pic[nx][ny] = 0  # 방문 체크
+                q.append((nx, ny))
                 size += 1
     return size
 
-size_answer = 0
-answer = 0
+max_size = 0
+count = 0
+
 for i in range(N):
     for j in range(M):
-        if not chk[i][j] and pic[i][j] == 1:
-            size_answer = max(size_answer,bfs(i,j))
-            answer+=1
+        if pic[i][j] == 1:
+            max_size = max(max_size, bfs(i, j))
+            count += 1
 
-print(answer)
-print(size_answer)
-
-
-
+print(count)
+print(max_size)
